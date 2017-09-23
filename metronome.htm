@@ -133,17 +133,18 @@ button {
 
     function togglePlay() {
         settings.playSound = !settings.playSound;
-        updateBeepInterval();
-        settings.timesThrough = 0;
-    }
-
-    function updateBeepInterval() {
-        const interval = parseInt(bpmToMs(elements.tempo.value, elements.beatType.value))
-        clearInterval(beepInterval)
 
         if (settings.playSound) {
-            beepInterval = setInterval(tick, interval);
+            return updateBeepInterval(elements.tempo.value, elements.beatType.value);
         }
+
+        settings.timesThrough = 0;
+        clearInterval(beepInterval);
+    }
+
+    function updateBeepInterval(tempo, beatType) {
+        const interval = parseInt(bpmToMs(tempo, beatType));
+        beepInterval = setInterval(tick, interval);
     }
 
     function bpmToMs(beatsPerMinute, beatType) {
