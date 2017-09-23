@@ -1,0 +1,61 @@
+html, body, div, span, applet, object, iframe,
+a, abbr, acronym, address, big, cite, code,
+h1,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0
+}
+
+html {
+    box-sizing: border-box;
+    padding: 25px;
+    font-family: 'Open Sans', sans-serif;
+
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+main {
+    display: inline-block;
+    margin: auto;
+    background: white;
+    padding: 25px;
+    border: 1px solid #ccc;
+}
+
+input, select {
+    padding: 10px;
+    margin-bottom: 25px;
+}
+
+input {
+    width: 100%;
+}
+
+button {
+    padding: 10px;
+    width: 100%;
+}
+
+label {
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.time-signature * + * {
+    margin-left: 25px;
+}
+
+.separator {
+    font-weight: bold;
+    font-size: 32px;
+}

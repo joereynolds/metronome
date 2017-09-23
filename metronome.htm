@@ -1,6 +1,8 @@
 <head>
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,800" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="style.css">
 </head>
+
 <main>
     <h1>Metronome</h1>
 
@@ -30,154 +32,20 @@
     </div>
 
     <div>
-        <input id="tempo" placeholder="tempo" type="text" name="tempo" value="120">
+        <label>Tempo:<span id="tempo-value">120bpm</span></label>
+
+        <input
+            id="tempo"
+            placeholder="tempo"
+            value=120
+            type="range"
+            name="tempo"
+            min="0"
+            max="300"
+        >
+
     </div>
-    <button onclick="togglePlay()">Start/Stop</button>
-
-    <div class="counter"></div>
-
+    <button id="toggle-button">Start/Stop</button>
 </main>
 
-<style>
-html, body, div, span, applet, object, iframe,
-a, abbr, acronym, address, big, cite, code,
-h1,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0
-}
-
-html {
-    box-sizing: border-box;
-    padding: 25px;
-    font-family: 'Open Sans', sans-serif;
-
-}
-
-*, *:before, *:after {
-    box-sizing: inherit;
-}
-
-main {
-    display: inline-block;
-    margin: auto;
-    background: white;
-    padding: 25px;
-    border: 1px solid #ccc;
-}
-
-input, select {
-    padding: 10px;
-    margin-bottom: 25px;
-}
-
-input {
-    width: 100%;
-}
-
-button {
-    padding: 10px;
-    width: 100%;
-}
-
-.time-signature * + * {
-    margin-left: 25px;
-}
-
-.separator {
-    font-weight: bold;
-    font-size: 32px;
-}
-</style>
-
-<script>
-
-    /**
-     * How often we should beep
-     */
-    var beepInterval;
-
-    const context = new AudioContext();
-
-    /**
-      * Low: The beep that is made on every beat but the main beat
-      * High: The beep that is made on the first beat of the bar
-      */
-    const frequencies = {
-        low: 880.0,
-        high: 1760.0
-    };
-
-    const elements = {
-        noteType: document.getElementById("note-type"),
-        beatType: document.getElementById("beat-type"),
-        tempo: document.getElementById("tempo"),
-    };
-
-    /**
-      * timesThrough: The amount of beeps made. This is counted so
-      *               we can find out the first beat of the bar.
-      * playSound: Whether or not we should be beeping
-      */
-    const settings = {
-        timesThrough: 0,
-        playSound: false
-    }
-
-    function togglePlay() {
-        settings.playSound = !settings.playSound;
-
-        if (settings.playSound) {
-            return updateBeepInterval(elements.tempo.value, elements.beatType.value);
-        }
-
-        settings.timesThrough = 0;
-        clearInterval(beepInterval);
-    }
-
-    function updateBeepInterval(tempo, beatType) {
-        const interval = parseInt(bpmToMs(tempo, beatType));
-        beepInterval = setInterval(tick, interval);
-    }
-
-    function bpmToMs(beatsPerMinute, beatType) {
-
-        const noteDurations = {
-            2: beatsPerMinute / 2,
-            4: beatsPerMinute,
-            8: beatsPerMinute * 2,
-            16: beatsPerMinute * 4,
-            32: beatsPerMinute * 8
-        };
-
-        const milliseconds = (60000 / noteDurations[beatType]);
-
-        return milliseconds;
-    }
-
-    function tick() {
-        settings.timesThrough++;
-        const osc = context.createOscillator();
-        const gain = context.createGain();
-
-        osc.type = "sine";
-        osc.frequency.value = frequencies.low;
-        osc.connect(gain);
-
-        gain.connect(context.destination);
-
-        if (settings.timesThrough % elements.noteType.value === 0) {
-            osc.frequency.value = frequencies.high
-        }
-
-        osc.start();
-        gain.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + .5)
-    }
-</script>
+<script src="metronome.js"></script>
