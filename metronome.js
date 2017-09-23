@@ -38,7 +38,7 @@
     elements.tempo.addEventListener('input', updateTempoValue);
 
     function updateTempoValue() {
-        elements.tempoValue.innerText = elements.tempo.value + 'bpm';
+        elements.tempoValue.innerText = elements.tempo.value + ' bpm';
     }
 
     function togglePlay() {
