@@ -99,18 +99,37 @@ button {
 
 <script>
 
+    /**
+     * How often we should beep
+     */
+    var beepInterval;
+
+    const context = new AudioContext();
+
+    /**
+      * Low: The beep that is made on every beat but the main beat
+      * High: The beep that is made on the first beat of the bar
+      */
+    const frequencies = {
+        low: 880.0,
+        high: 1760.0
+    };
+
     const elements = {
         noteType: document.getElementById("note-type"),
         beatType: document.getElementById("beat-type"),
         tempo: document.getElementById("tempo"),
     };
 
+    /**
+      * timesThrough: The amount of beeps made. This is counted so
+      *               we can find out the first beat of the bar.
+      * playSound: Whether or not we should be beeping
+      */
     const settings = {
         timesThrough: 0,
         playSound: false
     }
-
-    var beepInterval;
 
     function togglePlay() {
         settings.playSound = !settings.playSound;
@@ -121,7 +140,10 @@ button {
     function updateBeepInterval() {
         const interval = parseInt(bpmToMs(elements.tempo.value, elements.beatType.value))
         clearInterval(beepInterval)
-        beepInterval = setInterval(tick, interval);
+
+        if (settings.playSound) {
+            beepInterval = setInterval(tick, interval);
+        }
     }
 
     function bpmToMs(beatsPerMinute, beatType) {
@@ -134,34 +156,27 @@ button {
             32: beatsPerMinute * 8
         };
 
-        const milliseconds = (60000 / noteDurations[elements.beatType.value]);
+        const milliseconds = (60000 / noteDurations[beatType]);
 
         return milliseconds;
     }
 
-    var context = new AudioContext();
-    var lowFrequency = 880.0;
-    var highFrequency = 1760.0;
-
     function tick() {
         settings.timesThrough++;
-        if (settings.playSound) {
+        const osc = context.createOscillator();
+        const gain = context.createGain();
 
-            const osc = context.createOscillator();
-            const gain = context.createGain();
+        osc.type = "sine";
+        osc.frequency.value = frequencies.low;
+        osc.connect(gain);
 
-            osc.type = "sine";
-            osc.frequency.value = lowFrequency;
-            osc.connect(gain);
+        gain.connect(context.destination);
 
-            gain.connect(context.destination);
-
-            if (settings.timesThrough % elements.noteType.value === 0) {
-                osc.frequency.value = highFrequency;
-            }
-
-            osc.start();
-            gain.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + .5)
+        if (settings.timesThrough % elements.noteType.value === 0) {
+            osc.frequency.value = frequencies.high
         }
+
+        osc.start();
+        gain.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + .5)
     }
 </script>
