@@ -1,11 +1,9 @@
-html, body, div, span, applet, object, iframe,
-a, abbr, acronym, address, big, cite, code,
-h1,
+html, body, div, span,
+abbr, acronym, address,
 dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
+fieldset, form, label,
+figure, figcaption, footer,
+menu, nav, output, ruby, section,
 time, mark, audio, video {
 	margin: 0;
 	padding: 0;
@@ -16,58 +14,74 @@ html {
     box-sizing: border-box;
     padding: 25px;
     font-family: 'Open Sans', sans-serif;
-
+    font-size: 62.5%;
 }
 
 *, *:before, *:after {
     box-sizing: inherit;
 }
 
-main {
+body {
     width: 300px;
     margin: auto;
-    background: white;
+}
+
+main {
     padding: 25px;
     border: 1px solid #ccc;
+    margin-bottom: 5px;
 }
 
-input, select {
-    padding: 10px;
-    margin-bottom: 25px;
+/**
+ * Give all siblings of direct children a margin-top
+ */
+main > * + * {
+    margin-top: 25px;
 }
 
-input {
+a {
+    color: #6060d4;
+}
+
+input, button {
     width: 100%;
 }
 
 button {
     padding: 10px;
-    width: 100%;
     border: 0;
+    box-shadow: 0 5px #6060d4;
+    outline: none;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+button:active {
+    box-shadow: 0 2px #6060d4;
+    transform: translateY(3px);
+}
+
+.label {
     background: #6f8fe8;
     color: white;
     font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 5px;
+    padding: 5px;
+    display:inline-block;
+}
+
+.label:hover {
+    background: #6180d8;
+}
+
+.form-element {
+    background: #ef4d4d;
 }
 
 label {
-    padding: 5px;
-    color: white;
-    background: #6f8fe8;
-    border-radius: 5px;
-    font-weight: bold;
-    font-size: 10px;
-    text-transform: uppercase;
-}
-
-#tempo-value {
-    float: right;
-}
-
-.time-signature * + * {
-    margin-left: 25px;
-}
-
-.separator {
-    font-weight: bold;
-    font-size: 32px;
+    margin-left: 5px;
+    font-size: 1rem;
 }

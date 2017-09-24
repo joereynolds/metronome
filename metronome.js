@@ -35,21 +35,35 @@
     };
 
     elements.toggleButton.addEventListener('click', togglePlay);
-    elements.tempo.addEventListener('input', updateTempoValue);
+    elements.tempo.addEventListener('input', update);
 
     function updateTempoValue() {
-        elements.tempoValue.innerText = elements.tempo.value + ' bpm';
+        elements.tempoValue.innerText = `at ${elements.tempo.value} bpm`;
     }
 
     function togglePlay() {
         settings.playSound = !settings.playSound;
+
+        let buttonText = "play";
+
+        if (settings.playSound) {
+            buttonText = "pause";
+        }
+
+        elements.toggleButton.innerText = buttonText;
+
+        update();
+    }
+
+    function update() {
+        updateTempoValue();
+        clearInterval(beepInterval);
 
         if (settings.playSound) {
             return updateBeepInterval(elements.tempo.value, elements.beatType.value);
         }
 
         settings.timesThrough = 0;
-        clearInterval(beepInterval);
     }
 
     function updateBeepInterval(tempo, beatType) {

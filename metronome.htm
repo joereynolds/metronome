@@ -1,13 +1,12 @@
 <head>
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,800" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,800" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
-<main>
-    <h1>Metronome</h1>
-
-    <div class="time-signature">
-        <select id="note-type" name="note">
+<body>
+    <main>
+    <div class="label time-signature">
+        <select class="form-element label" id="note-type">
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -22,32 +21,30 @@
             <option value="12">12</option>
         </select>
         <span class="separator">/</span>
-        <select id="beat-type" name="beat">
+        <select class="form-element label" id="beat-type">
             <option value="2">2</option>
             <option value="4" selected>4</option>
             <option value="8">8</option>
             <option value="16">16</option>
             <option value="32">32</option>
         </select>
+        <label id="tempo-value">at 120 bpm</label>
     </div>
 
-    <div>
-        <div>
-            <label id="tempo-value">120 bpm</label>
-        </div>
+    <input
+               id="tempo"
+               value=120
+               type="range"
+               min="0"
+               max="300"
+               >
 
-        <input
-            id="tempo"
-            placeholder="tempo"
-            value=120
-            type="range"
-            name="tempo"
-            min="0"
-            max="300"
-        >
-
-    </div>
-    <button id="toggle-button">Start/Stop</button>
-</main>
+               <button class="label" id="toggle-button">Play</button>
+    </main>
+    <footer>
+        <a href="https://github.com/joereynolds/metronome">Source Code</a>
+        <a href="https://joereynoldsaudio.com/">Me</a>
+    </footer>
+</body>
 
 <script src="metronome.js"></script>
