@@ -1,6 +1,8 @@
 <head>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,800" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 </head>
 
 <body>
@@ -29,6 +31,7 @@
             <option value="32">32</option>
         </select>
         <label id="tempo-value">at 120 bpm</label>
+        <span id="beat-counter" class="counter">2</span>
     </div>
 
     <input
@@ -39,7 +42,7 @@
                max="300"
                >
 
-               <button class="label" id="toggle-button">Play</button>
+               <button class="button label" id="toggle-button">Play</button>
     </main>
     <footer>
         <a href="https://github.com/joereynolds/metronome">Source Code</a>

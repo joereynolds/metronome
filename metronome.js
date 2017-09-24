@@ -21,7 +21,8 @@
         beatType: document.getElementById("beat-type"),
         tempo: document.getElementById("tempo"),
         tempoValue: document.getElementById("tempo-value"),
-        toggleButton: document.getElementById("toggle-button")
+        toggleButton: document.getElementById("toggle-button"),
+        beatCounter: document.getElementById("beat-counter")
     };
 
     /**
@@ -55,8 +56,14 @@
         update();
     }
 
+    function updateBeatCounter() {
+        const val  = elements.noteType.value;
+        elements.beatCounter.innerText = `${(settings.timesThrough % val) + 1}`;
+    }
+
     function update() {
         updateTempoValue();
+        updateBeatCounter();
         clearInterval(beepInterval);
 
         if (settings.playSound) {
@@ -88,6 +95,7 @@
 
     function tick() {
         settings.timesThrough++;
+        updateBeatCounter();
 
         const oscillator = context.createOscillator();
         const gain = context.createGain();

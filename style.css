@@ -15,6 +15,7 @@ html {
     padding: 25px;
     font-family: 'Open Sans', sans-serif;
     font-size: 62.5%;
+    background: #cfe0ff;
 }
 
 *, *:before, *:after {
@@ -24,12 +25,14 @@ html {
 body {
     width: 300px;
     margin: auto;
+    font-size: 1.5rem;
 }
 
 main {
     padding: 25px;
     border: 1px solid #ccc;
     margin-bottom: 5px;
+    background: white;
 }
 
 /**
@@ -71,17 +74,29 @@ button:active {
     border-radius: 5px;
     padding: 5px;
     display:inline-block;
+    font-size: 1.5rem;
 }
 
 .label:hover {
     background: #6180d8;
 }
 
+.button {
+    padding: 10px;
+}
+
+.counter {
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.counter,
 .form-element {
     background: #ef4d4d;
 }
 
 label {
     margin-left: 5px;
-    font-size: 1rem;
 }
