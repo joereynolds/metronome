@@ -1,8 +1,9 @@
+<!DOCTYPE html>
 <head>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,800" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <title>Metronome</title>
 </head>
 
 <body>
@@ -23,6 +24,16 @@
             <option value="12">12</option>
             <option value="13">13</option>
             <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="17">17</option>
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">20</option>
+            <option value="21">21</option>
+            <option value="22">22</option>
+            <option value="23">23</option>
+            <option value="24">24</option>
         </select>
         <span class="separator">/</span>
         <select class="form-element label" id="beat-type">
@@ -36,15 +47,9 @@
         <span id="beat-counter" class="counter">2</span>
     </div>
 
-    <input
-               id="tempo"
-               value=120
-               type="range"
-               min="0"
-               max="300"
-               >
+    <input id="tempo" value=120 type="range" min="0" max="300" >
 
-               <button class="button label" id="toggle-button">Play</button>
+    <button class="button label" id="toggle-button">Play</button>
     </main>
     <footer>
         <a href="https://github.com/joereynolds/metronome">Source Code</a>
