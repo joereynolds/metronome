@@ -7,7 +7,7 @@
 </head>
 
 <body>
-    <main>
+    <main class="box">
     <div class="label time-signature">
         <select class="form-element label" id="note-type">
             <option value="1">1</option>
@@ -50,7 +50,15 @@
     <input id="tempo" value=120 type="range" min="0" max="300" >
 
     <button class="button label" id="toggle-button">Play</button>
+    <small><a id="toggle-options" href="#">Options</a></small>
     </main>
+
+    <section id="options" class="box hidden">
+        <h1>Options</h1>
+        <label>Volume</label>
+        <input id="volume" min="0" max="1" step="0.1" type="range">
+    </section>
+
     <footer>
         <a href="https://github.com/joereynolds/metronome">Source Code</a>
         <a href="https://joereynoldsaudio.com/">Me</a>

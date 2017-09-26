@@ -22,7 +22,10 @@
         tempo: document.getElementById("tempo"),
         tempoValue: document.getElementById("tempo-value"),
         toggleButton: document.getElementById("toggle-button"),
-        beatCounter: document.getElementById("beat-counter")
+        beatCounter: document.getElementById("beat-counter"),
+        toggleOptions: document.getElementById("toggle-options"),
+        options: document.getElementById("options"),
+        volume: document.getElementById("volume")
     };
 
     /**
@@ -36,6 +39,10 @@
     };
 
     elements.toggleButton.addEventListener('click', togglePlay);
+    elements.toggleOptions.addEventListener('click', function() {
+        elements.options.classList.toggle('hidden');
+    });
+
     elements.tempo.addEventListener('input', update);
 
     function updateTempoValue() {
@@ -100,6 +107,7 @@
         const oscillator = context.createOscillator();
         const gain = context.createGain();
 
+        gain.gain.value = elements.volume.value;
         oscillator.type = "sine";
         oscillator.frequency.value = frequencies.low;
         oscillator.connect(gain);

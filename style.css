@@ -1,9 +1,7 @@
 html, body, div, span,
-abbr, acronym, address,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label,
-figure, figcaption, footer,
-menu, nav, output, ruby, section,
+dl, dt, dd, ol, ul, li, h1,
+fieldset, form, label, footer,
+menu, nav, output, section,
 time, mark, audio, video {
 	margin: 0;
 	padding: 0;
@@ -28,11 +26,19 @@ body {
     font-size: 1.5rem;
 }
 
-main {
+small {
+    text-align: right;
+}
+
+.box {
     padding: 25px;
     border: 1px solid #ccc;
     margin-bottom: 5px;
     background: white;
+}
+
+.box + .box {
+    margin-top: 25px;
 }
 
 /**
@@ -83,6 +89,7 @@ button:active {
 
 .button {
     padding: 10px;
+    margin-bottom: 10px;
 }
 
 .counter {
@@ -90,6 +97,10 @@ button:active {
     font-weight: bold;
     border-radius: 5px;
     padding: 5px;
+}
+
+.hidden {
+    display: none;
 }
 
 .counter,
