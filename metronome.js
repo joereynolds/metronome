@@ -5,7 +5,7 @@
      */
     var beepInterval;
 
-    const context = new AudioContext();
+    const context = new (window.AudioContext || window.webkitAudioContext)();
 
     /**
      * Low: The beep that is made on every beat but the main beat
@@ -111,6 +111,6 @@
         }
 
         oscillator.start();
-        gain.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + .5)
+        gain.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + .10)
     }
 })();
