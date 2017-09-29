@@ -122,6 +122,8 @@
         }
 
         oscillator.start();
-        gain.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + .10)
+        if (gain.gain.value > 0) {
+            gain.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + .10)
+        }
     }
 })();
