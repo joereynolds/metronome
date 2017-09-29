@@ -81,8 +81,11 @@
     }
 
     function updateBeepInterval(tempo, beatType) {
-        const interval = parseInt(bpmToMs(tempo, beatType));
-        beepInterval = setInterval(tick, interval);
+        
+        if (tempo > 0) {
+            const interval = parseInt(bpmToMs(tempo, beatType));
+            beepInterval = setInterval(tick, interval);
+        }
     }
 
     function bpmToMs(beatsPerMinute, beatType) {
