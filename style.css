@@ -30,6 +30,7 @@ body {
 }
 
 .box {
+  position: relative;
   padding: 25px;
   border: 1px solid;
   margin-bottom: 5px;
@@ -113,4 +114,17 @@ select {
     border: 1px solid;
     background: white;
     padding: 8px;
+}
+
+.btn-close {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    line-height: 30px;
+    width: 30px;
+    text-align: center;
+}
+
+.btn-close:hover {
+    cursor: pointer;
 }

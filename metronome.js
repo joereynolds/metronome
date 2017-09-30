@@ -24,6 +24,7 @@
         toggleButton: document.getElementById("toggle-button"),
         beatCounter: document.getElementById("beat-counter"),
         toggleOptions: document.getElementById("toggle-options"),
+        closeOptions: document.getElementById("close-options"),
         options: document.getElementById("options"),
         volume: document.getElementById("volume"),
         waveform: document.getElementById("waveform")
@@ -42,6 +43,10 @@
 
     elements.toggleButton.addEventListener('click', togglePlay);
     elements.toggleOptions.addEventListener('click', function() {
+        elements.options.classList.toggle('hidden');
+    });
+
+    elements.closeOptions.addEventListener('click', (e) => {
         elements.options.classList.toggle('hidden');
     });
 
