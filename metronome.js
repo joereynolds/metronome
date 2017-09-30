@@ -25,7 +25,9 @@
         beatCounter: document.getElementById("beat-counter"),
         toggleOptions: document.getElementById("toggle-options"),
         options: document.getElementById("options"),
-        volume: document.getElementById("volume")
+        volume: document.getElementById("volume"),
+        waveform: document.getElementById("waveform")
+
     };
 
     /**
@@ -111,7 +113,7 @@
         const gain = context.createGain();
 
         gain.gain.value = elements.volume.value;
-        oscillator.type = "sine";
+        oscillator.type =  elements.waveform.value;
         oscillator.frequency.value = frequencies.low;
         oscillator.connect(gain);
 
