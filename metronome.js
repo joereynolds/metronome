@@ -53,16 +53,7 @@
 
     function togglePlay() {
         settings.playSound = !settings.playSound;
-
-        let buttonText = "play";
-
-        if (settings.playSound) {
-            buttonText = "pause";
-        }
-
-        elements.toggleButton.innerText = buttonText;
-
-        update();
+        update(settings.playSound);
     }
 
     function updateBeatCounter() {
@@ -70,12 +61,23 @@
         elements.beatCounter.innerText = `${(settings.timesThrough % val) + 1}`;
     }
 
-    function update() {
+    function updateToggleButtonText(shouldPlaySound) {
+        let buttonText = "play";
+
+        if (shouldPlaySound) {
+            buttonText = "pause";
+        }
+
+        elements.toggleButton.innerText = buttonText;
+    }
+
+    function update(shouldPlaySound) {
         updateTempoValue();
         updateBeatCounter();
+        updateToggleButtonText(shouldPlaySound);
         clearInterval(beepInterval);
 
-        if (settings.playSound) {
+        if (shouldPlaySound) {
             return updateBeepInterval(elements.tempo.value, elements.beatType.value);
         }
 
@@ -83,7 +85,7 @@
     }
 
     function updateBeepInterval(tempo, beatType) {
-        
+
         if (tempo > 0) {
             const interval = parseInt(bpmToMs(tempo, beatType));
             beepInterval = setInterval(tick, interval);
@@ -124,6 +126,7 @@
         }
 
         oscillator.start();
+
         if (gain.gain.value > 0) {
             gain.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + .10)
         }
