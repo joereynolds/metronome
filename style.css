@@ -13,13 +13,15 @@ html {
   padding: 25px;
   font-family: "Open Sans", sans-serif;
   font-size: 62.5%;
-  background: #cfe0ff;
+  background: #e8e8e8;
   color: #565656;
 }
 
 *, *:before, *:after {
   box-sizing: inherit;
 }
+
+* { border-color: #565656; }
 
 body {
   width: 325px;
@@ -29,7 +31,7 @@ body {
 
 .box {
   padding: 25px;
-  border: 1px solid #ccc;
+  border: 1px solid;
   margin-bottom: 5px;
   background: white;
 }
@@ -39,7 +41,20 @@ body {
 }
 
 a {
-  color: #6060d4;
+    font-size: small;
+    text-decoration: none;
+}
+
+a + a {
+    margin-left: 5px;
+}
+
+a:visited {
+    color: inherit;
+}
+
+a:hover {
+    text-decoration: underline;
 }
 
 input, button {
@@ -48,8 +63,9 @@ input, button {
 
 button {
   padding: 10px;
-  border: 0;
-  box-shadow: 0 5px #6060d4;
+  border: 1px solid;
+  box-shadow: 0 5px #565656;
+  background:white;
   outline: none;
 }
 
@@ -57,44 +73,34 @@ button:hover {
   cursor: pointer;
 }
 
-button:active {
-  box-shadow: 0 2px #6060d4;
-  transform: translateY(3px);
-}
-
 .label {
-  background: #6f8fe8;
-  color: white;
   font-weight: bold;
   text-transform: uppercase;
-  padding: 5px;
-  font-size: 1.5rem;
+  padding: 8px;
 }
 
 .time-signature {
-    display: inline-block;
-}
-.label:hover {
-  background: #6180d8;
+  background: #e8e8e8;
+  display: inline-block;
 }
 
 .button {
   padding: 10px;
   margin-bottom: 10px;
-  border-radius: 5px;
+}
+
+.wrapper {
+    white-space: nowrap;
 }
 
 .counter {
-  padding: 10px;
+  background: #565656;
+  color: white;
+  padding: 15px;
 }
 
 .hidden {
   display: none;
-}
-
-.counter,
-.form-element {
-  background: #ef4d4d;
 }
 
 label {
@@ -104,6 +110,7 @@ label {
 }
 
 select {
+    border: 1px solid;
     background: white;
-    padding: 5px;
+    padding: 8px;
 }
