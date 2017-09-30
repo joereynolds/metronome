@@ -3,111 +3,107 @@ dl, dt, dd, ol, ul, li, h1,
 fieldset, form, label, footer,
 menu, nav, output, section,
 time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0
+  margin: 0;
+  padding: 0;
+  border: 0;
 }
 
 html {
-    box-sizing: border-box;
-    padding: 25px;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 62.5%;
-    background: #cfe0ff;
+  box-sizing: border-box;
+  padding: 25px;
+  font-family: "Open Sans", sans-serif;
+  font-size: 62.5%;
+  background: #cfe0ff;
+  color: #565656;
 }
 
 *, *:before, *:after {
-    box-sizing: inherit;
+  box-sizing: inherit;
 }
 
 body {
-    width: 325px;
-    margin: auto;
-    font-size: 1.5rem;
-}
-
-small {
-    text-align: right;
+  width: 325px;
+  margin: auto;
+  font-size: 1.5rem;
 }
 
 .box {
-    padding: 25px;
-    border: 1px solid #ccc;
-    margin-bottom: 5px;
-    background: white;
+  padding: 25px;
+  border: 1px solid #ccc;
+  margin-bottom: 5px;
+  background: white;
 }
-
-.box + .box {
-    margin-top: 25px;
-}
-
-/**
- * Give all siblings of direct children a margin-top
- */
-main > * + * {
-    margin-top: 25px;
+.box + .box,
+.box > * + * {
+  margin-top: 25px;
 }
 
 a {
-    color: #6060d4;
+  color: #6060d4;
 }
 
 input, button {
-    width: 100%;
+  width: 100%;
 }
 
 button {
-    padding: 10px;
-    border: 0;
-    box-shadow: 0 5px #6060d4;
-    outline: none;
+  padding: 10px;
+  border: 0;
+  box-shadow: 0 5px #6060d4;
+  outline: none;
 }
 
 button:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 button:active {
-    box-shadow: 0 2px #6060d4;
-    transform: translateY(3px);
+  box-shadow: 0 2px #6060d4;
+  transform: translateY(3px);
 }
 
 .label {
-    background: #6f8fe8;
-    color: white;
-    font-weight: bold;
-    text-transform: uppercase;
-    border-radius: 5px;
-    padding: 5px;
-    display:inline-block;
-    font-size: 1.5rem;
+  background: #6f8fe8;
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 5px;
+  font-size: 1.5rem;
 }
 
+.time-signature {
+    display: inline-block;
+}
 .label:hover {
-    background: #6180d8;
+  background: #6180d8;
 }
 
 .button {
-    padding: 10px;
-    margin-bottom: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
 }
 
 .counter {
-    color: white;
-    font-weight: bold;
-    border-radius: 5px;
-    padding: 5px;
+  padding: 10px;
 }
 
 .hidden {
-    display: none;
+  display: none;
 }
 
 .counter,
 .form-element {
-    background: #ef4d4d;
+  background: #ef4d4d;
 }
 
 label {
-    margin-left: 5px;
+  margin-left: 5px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+select {
+    background: white;
+    padding: 5px;
 }

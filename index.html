@@ -44,11 +44,11 @@
             <option value="16">16</option>
             <option value="32">32</option>
         </select>
-        <label id="tempo-value">at 120 bpm</label>
-        <span id="beat-counter" class="counter">1</span>
+        <span id="tempo-value">at 120 bpm</span>
     </div>
+    <span id="beat-counter" class="label counter">1</span>
 
-    <input id="tempo" value=120 type="range" min="0" max="300" >
+    <input id="tempo" value="120" type="range" min="0" max="300" >
 
     <button class="button label" id="toggle-button">Play</button>
     <small><a id="toggle-options" href="#">Options</a></small>
@@ -56,11 +56,13 @@
 
     <section id="options" class="box hidden">
         <h1>Options</h1>
-        <label>Volume</label>
-        <input id="volume" min="0" max="1" step="0.1" type="range">
-        <label>Waveform</label> <br>
-        <div class="label waveform">
-            <select class="form-element label" id="waveform">
+        <div class="option">
+            <label>Volume:</label>
+            <input id="volume" min="0" max="1" step="0.1" type="range">
+        </div>
+        <div class="option">
+            <label>Waveform:</label>
+            <select id="waveform">
                 <option value="sine" selected>Sine</option>
                 <option value="square">Square</option>
                 <option value="triangle">Triangle</option>
