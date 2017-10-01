@@ -47,6 +47,9 @@
     });
 
     elements.beatType.addEventListener('input', update);
+    elements.closeOptions.addEventListener('click', (e) => {
+        elements.options.classList.toggle('hidden');
+    });
 
     function updateTempoValue() {
         elements.tempoValue.innerText = `at ${elements.tempo.value} bpm`;
