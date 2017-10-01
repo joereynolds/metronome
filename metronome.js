@@ -36,7 +36,7 @@
      * playSound: Whether or not we should be beeping
      */
     const settings = {
-        timesThrough: 0,
+        timesThrough: -1,
         playSound: false
     };
 
@@ -84,7 +84,7 @@
             return updateBeepInterval(elements.tempo.value, elements.beatType.value);
         }
 
-        settings.timesThrough = 0;
+        settings.timesThrough = -1;
     }
 
     function updateBeepInterval(tempo, beatType) {
