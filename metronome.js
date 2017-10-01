@@ -24,6 +24,7 @@
         toggleButton: document.getElementById("toggle-button"),
         beatCounter: document.getElementById("beat-counter"),
         toggleOptions: document.getElementById("toggle-options"),
+        closeOptions: document.getElementById("close-options"),
         options: document.getElementById("options"),
         volume: document.getElementById("volume"),
         waveform: document.getElementById("waveform")
@@ -36,7 +37,7 @@
      * playSound: Whether or not we should be beeping
      */
     const settings = {
-        timesThrough: 0,
+        timesThrough: -1,
         playSound: false
     };
 
@@ -45,7 +46,7 @@
         elements.options.classList.toggle('hidden');
     });
 
-    elements.tempo.addEventListener('input', update);
+    elements.beatType.addEventListener('input', update);
 
     function updateTempoValue() {
         elements.tempoValue.innerText = `at ${elements.tempo.value} bpm`;
@@ -78,10 +79,13 @@
         clearInterval(beepInterval);
 
         if (shouldPlaySound) {
+            // Tick once before starting the interval, to make the metronome
+            // start immediately when pressing play.
+            tick();
             return updateBeepInterval(elements.tempo.value, elements.beatType.value);
         }
 
-        settings.timesThrough = 0;
+        settings.timesThrough = -1;
     }
 
     function updateBeepInterval(tempo, beatType) {
