@@ -48,12 +48,14 @@
     });
 
     elements.beatType.addEventListener('input', update);
-    
+
+    // tempo: update display value while dragged and update beat when release
+    elements.tempo.addEventListener('input', updateTempoValue);
+    elements.tempo.addEventListener('mouseup', update);
+
     elements.closeOptions.addEventListener('click', (e) => {
         elements.options.classList.toggle('hidden');
-    });
-
-    elements.tempo.addEventListener('input', update);		
+    });	
 
     function updateTempoValue() {
         elements.tempoValue.innerText = `at ${elements.tempo.value} bpm`;
