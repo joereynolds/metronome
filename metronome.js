@@ -68,6 +68,10 @@
         elements.beatCounter.innerText = `${(settings.timesThrough % val) + 1}`;
     }
 
+    /**
+     * Updates the text of the button.
+     * @param {Boolean} shouldPlaySound 
+     */
     function updateToggleButtonText(shouldPlaySound) {
         let buttonText = "play";
 
@@ -75,13 +79,13 @@
             buttonText = "pause";
         }
 
-        elements.toggleButton.innerText = buttonText;
+        return buttonText;
     }
 
     function update(shouldPlaySound) {
         updateTempoValue();
         updateBeatCounter();
-        updateToggleButtonText(shouldPlaySound);
+        elements.toggleButton.innerText = updateToggleButtonText(shouldPlaySound);
         clearInterval(beepInterval);
 
         if (shouldPlaySound) {
@@ -105,6 +109,7 @@
     function bpmToMs(beatsPerMinute, beatType) {
 
         const noteDurations = {
+            1: beatsPerMinute / 4,
             2: beatsPerMinute / 2,
             4: beatsPerMinute,
             8: beatsPerMinute * 2,
@@ -145,4 +150,61 @@
             gain.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + .10)
         }
     }
+
+    //Rudimentary test for now (saves the errors we'd get trying to move to node)
+    function test() {
+
+        console.assert(
+            shouldBeep(4, 5) === false, 
+            "Test we detect the correct place to beep in a bar"
+        );
+
+        console.assert(
+            shouldBeep(4, 4) === true, 
+            "Test we detect the correct place to beep in a bar"
+        );
+
+        console.assert(
+            updateToggleButtonText(true) === 'pause',
+            "Test we assign the correct text to the button"
+        );
+
+        console.assert(
+            updateToggleButtonText(false) === 'play',
+            "Test we assign the correct text to the button" 
+        );
+
+        console.assert(
+            bpmToMs(120, 1) === 2000,
+            "Test whole notes at 120 are converted to milliseconds correctly"
+        );
+
+        console.assert(
+            bpmToMs(120, 2) === 1000,
+            "Test half notes at 120 are converted to milliseconds correctly"
+        );
+
+        console.assert(
+            bpmToMs(120, 4) === 500,
+            "Test quarter notes at 120 are converted to milliseconds correctly"
+        );
+
+        console.assert(
+            bpmToMs(120, 8) === 250,
+            "Test eigth notes at 120 are converted to milliseconds correctly"
+        );
+
+        console.assert(
+            bpmToMs(120, 16) === 125,
+            "Test sixteenth notes at 120 are converted to milliseconds correctly"
+        );
+
+        console.assert(
+            bpmToMs(120, 32) === 62.5,
+            "Test thirty-second notes at 120 are converted to milliseconds correctly"
+        );
+    }
+    
+    // Uncomment the line below to check the tests
+    // test();
 })();
