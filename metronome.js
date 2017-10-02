@@ -42,14 +42,18 @@
     };
 
     elements.toggleButton.addEventListener('click', togglePlay);
+
     elements.toggleOptions.addEventListener('click', function() {
         elements.options.classList.toggle('hidden');
     });
 
     elements.beatType.addEventListener('input', update);
+    
     elements.closeOptions.addEventListener('click', (e) => {
         elements.options.classList.toggle('hidden');
     });
+
+    elements.tempo.addEventListener('input', update);		
 
     function updateTempoValue() {
         elements.tempoValue.innerText = `at ${elements.tempo.value} bpm`;
