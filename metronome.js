@@ -28,7 +28,6 @@
         options: document.getElementById("options"),
         volume: document.getElementById("volume"),
         waveform: document.getElementById("waveform")
-
     };
 
     /**
@@ -51,15 +50,13 @@
 
     // tempo: update display value while dragged and update beat when release
     elements.tempo.addEventListener('input', updateTempoValue);
-    elements.tempo.addEventListener('mouseup', update);
+    elements.tempo.addEventListener('change', update);
 
     elements.closeOptions.addEventListener('click', (e) => {
         elements.options.classList.toggle('hidden');
     });	
 
-    function updateTempoValue() {
-        elements.tempoValue.innerText = `at ${elements.tempo.value} bpm`;
-    }
+    var updateTempoValue = () => elements.tempoValue.innerText = `at ${elements.tempo.value} bpm`;
 
     function togglePlay() {
         settings.playSound = !settings.playSound;
@@ -120,6 +117,8 @@
         return milliseconds;
     }
 
+    var shouldBeep = (timesThrough, noteType) => timesThrough % noteType === 0;
+
     function tick() {
         settings.timesThrough++;
         updateBeatCounter();
@@ -134,7 +133,9 @@
 
         gain.connect(context.destination);
 
-        if (settings.timesThrough % elements.noteType.value === 0) {
+        timeToBeep = shouldBeep(settings.timesThrough, elements.noteType.value)
+
+        if (timeToBeep) {
             oscillator.frequency.value = frequencies.high
         }
 
