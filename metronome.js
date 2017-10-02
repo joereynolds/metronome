@@ -1,210 +1,152 @@
-(function() {
+/**
+ * How often we should beep
+ */
+var beepInterval;
 
-    /**
-     * How often we should beep
-     */
-    var beepInterval;
+const context = new (window.AudioContext || window.webkitAudioContext)();
 
-    const context = new (window.AudioContext || window.webkitAudioContext)();
+/**
+ * Low: The beep that is made on every beat but the main beat
+ * High: The beep that is made on the first beat of the bar
+ */
+const frequencies = {
+    low: 880.0,
+    high: 1760.0
+};
 
-    /**
-     * Low: The beep that is made on every beat but the main beat
-     * High: The beep that is made on the first beat of the bar
-     */
-    const frequencies = {
-        low: 880.0,
-        high: 1760.0
+const elements = {
+    noteType: document.getElementById("note-type"),
+    beatType: document.getElementById("beat-type"),
+    tempo: document.getElementById("tempo"),
+    tempoValue: document.getElementById("tempo-value"),
+    toggleButton: document.getElementById("toggle-button"),
+    beatCounter: document.getElementById("beat-counter"),
+    toggleOptions: document.getElementById("toggle-options"),
+    closeOptions: document.getElementById("close-options"),
+    options: document.getElementById("options"),
+    volume: document.getElementById("volume"),
+    waveform: document.getElementById("waveform")
+};
+
+/**
+ * timesThrough: The amount of beeps made. This is counted so
+ *               we can find out the first beat of the bar.
+ * playSound: Whether or not we should be beeping
+ */
+const settings = {
+    timesThrough: -1,
+    playSound: false
+};
+
+elements.toggleButton.addEventListener('click', togglePlay);
+
+elements.toggleOptions.addEventListener('click', function () {
+    elements.options.classList.toggle('hidden');
+});
+
+elements.beatType.addEventListener('input', update);
+
+// tempo: update display value while dragged and update beat when release
+elements.tempo.addEventListener('input', updateTempoValue);
+elements.tempo.addEventListener('change', update);
+
+elements.closeOptions.addEventListener('click', (e) => {
+    elements.options.classList.toggle('hidden');
+});
+
+var updateTempoValue = () => elements.tempoValue.innerText = `at ${elements.tempo.value} bpm`;
+
+function togglePlay() {
+    settings.playSound = !settings.playSound;
+    update(settings.playSound);
+}
+
+function updateBeatCounter() {
+    const val = elements.noteType.value;
+    elements.beatCounter.innerText = `${(settings.timesThrough % val) + 1}`;
+}
+
+/**
+ * Updates the text of the button.
+ * @param {Boolean} shouldPlaySound 
+ */
+function updateToggleButtonText(shouldPlaySound) {
+    let buttonText = "play";
+
+    if (shouldPlaySound) {
+        buttonText = "pause";
+    }
+
+    return buttonText;
+}
+
+function update(shouldPlaySound) {
+    updateTempoValue();
+    updateBeatCounter();
+    elements.toggleButton.innerText = updateToggleButtonText(shouldPlaySound);
+    clearInterval(beepInterval);
+
+    if (shouldPlaySound) {
+        // Tick once before starting the interval, to make the metronome
+        // start immediately when pressing play.
+        tick();
+        return updateBeepInterval(elements.tempo.value, elements.beatType.value);
+    }
+
+    settings.timesThrough = -1;
+}
+
+function updateBeepInterval(tempo, beatType) {
+
+    if (tempo > 0) {
+        const interval = parseInt(bpmToMs(tempo, beatType));
+        beepInterval = setInterval(tick, interval);
+    }
+}
+
+function bpmToMs(beatsPerMinute, beatType) {
+
+    const noteDurations = {
+        1: beatsPerMinute / 4,
+        2: beatsPerMinute / 2,
+        4: beatsPerMinute,
+        8: beatsPerMinute * 2,
+        16: beatsPerMinute * 4,
+        32: beatsPerMinute * 8
     };
 
-    const elements = {
-        noteType: document.getElementById("note-type"),
-        beatType: document.getElementById("beat-type"),
-        tempo: document.getElementById("tempo"),
-        tempoValue: document.getElementById("tempo-value"),
-        toggleButton: document.getElementById("toggle-button"),
-        beatCounter: document.getElementById("beat-counter"),
-        toggleOptions: document.getElementById("toggle-options"),
-        closeOptions: document.getElementById("close-options"),
-        options: document.getElementById("options"),
-        volume: document.getElementById("volume"),
-        waveform: document.getElementById("waveform")
-    };
+    const milliseconds = (60000 / noteDurations[beatType]);
 
-    /**
-     * timesThrough: The amount of beeps made. This is counted so
-     *               we can find out the first beat of the bar.
-     * playSound: Whether or not we should be beeping
-     */
-    const settings = {
-        timesThrough: -1,
-        playSound: false
-    };
+    return milliseconds;
+}
 
-    elements.toggleButton.addEventListener('click', togglePlay);
+function shouldBeep (timesThrough, noteType) {
+    return timesThrough % noteType === 0;
+}
 
-    elements.toggleOptions.addEventListener('click', function() {
-        elements.options.classList.toggle('hidden');
-    });
+function tick() {
+    settings.timesThrough++;
+    updateBeatCounter();
 
-    elements.beatType.addEventListener('input', update);
+    const oscillator = context.createOscillator();
+    const gain = context.createGain();
 
-    // tempo: update display value while dragged and update beat when release
-    elements.tempo.addEventListener('input', updateTempoValue);
-    elements.tempo.addEventListener('change', update);
+    gain.gain.value = elements.volume.value;
+    oscillator.type = elements.waveform.value;
+    oscillator.frequency.value = frequencies.low;
+    oscillator.connect(gain);
 
-    elements.closeOptions.addEventListener('click', (e) => {
-        elements.options.classList.toggle('hidden');
-    });	
+    gain.connect(context.destination);
 
-    var updateTempoValue = () => elements.tempoValue.innerText = `at ${elements.tempo.value} bpm`;
+    timeToBeep = shouldBeep(settings.timesThrough, elements.noteType.value)
 
-    function togglePlay() {
-        settings.playSound = !settings.playSound;
-        update(settings.playSound);
+    if (timeToBeep) {
+        oscillator.frequency.value = frequencies.high
     }
 
-    function updateBeatCounter() {
-        const val  = elements.noteType.value;
-        elements.beatCounter.innerText = `${(settings.timesThrough % val) + 1}`;
+    oscillator.start();
+
+    if (gain.gain.value > 0) {
+        gain.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + .10)
     }
-
-    /**
-     * Updates the text of the button.
-     * @param {Boolean} shouldPlaySound 
-     */
-    function updateToggleButtonText(shouldPlaySound) {
-        let buttonText = "play";
-
-        if (shouldPlaySound) {
-            buttonText = "pause";
-        }
-
-        return buttonText;
-    }
-
-    function update(shouldPlaySound) {
-        updateTempoValue();
-        updateBeatCounter();
-        elements.toggleButton.innerText = updateToggleButtonText(shouldPlaySound);
-        clearInterval(beepInterval);
-
-        if (shouldPlaySound) {
-            // Tick once before starting the interval, to make the metronome
-            // start immediately when pressing play.
-            tick();
-            return updateBeepInterval(elements.tempo.value, elements.beatType.value);
-        }
-
-        settings.timesThrough = -1;
-    }
-
-    function updateBeepInterval(tempo, beatType) {
-
-        if (tempo > 0) {
-            const interval = parseInt(bpmToMs(tempo, beatType));
-            beepInterval = setInterval(tick, interval);
-        }
-    }
-
-    function bpmToMs(beatsPerMinute, beatType) {
-
-        const noteDurations = {
-            1: beatsPerMinute / 4,
-            2: beatsPerMinute / 2,
-            4: beatsPerMinute,
-            8: beatsPerMinute * 2,
-            16: beatsPerMinute * 4,
-            32: beatsPerMinute * 8
-        };
-
-        const milliseconds = (60000 / noteDurations[beatType]);
-
-        return milliseconds;
-    }
-
-    var shouldBeep = (timesThrough, noteType) => timesThrough % noteType === 0;
-
-    function tick() {
-        settings.timesThrough++;
-        updateBeatCounter();
-
-        const oscillator = context.createOscillator();
-        const gain = context.createGain();
-
-        gain.gain.value = elements.volume.value;
-        oscillator.type =  elements.waveform.value;
-        oscillator.frequency.value = frequencies.low;
-        oscillator.connect(gain);
-
-        gain.connect(context.destination);
-
-        timeToBeep = shouldBeep(settings.timesThrough, elements.noteType.value)
-
-        if (timeToBeep) {
-            oscillator.frequency.value = frequencies.high
-        }
-
-        oscillator.start();
-
-        if (gain.gain.value > 0) {
-            gain.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + .10)
-        }
-    }
-
-    //Rudimentary test for now (saves the errors we'd get trying to move to node)
-    function test() {
-
-        console.assert(
-            shouldBeep(4, 5) === false, 
-            "Test we detect the correct place to beep in a bar"
-        );
-
-        console.assert(
-            shouldBeep(4, 4) === true, 
-            "Test we detect the correct place to beep in a bar"
-        );
-
-        console.assert(
-            updateToggleButtonText(true) === 'pause',
-            "Test we assign the correct text to the button"
-        );
-
-        console.assert(
-            updateToggleButtonText(false) === 'play',
-            "Test we assign the correct text to the button" 
-        );
-
-        console.assert(
-            bpmToMs(120, 1) === 2000,
-            "Test whole notes at 120 are converted to milliseconds correctly"
-        );
-
-        console.assert(
-            bpmToMs(120, 2) === 1000,
-            "Test half notes at 120 are converted to milliseconds correctly"
-        );
-
-        console.assert(
-            bpmToMs(120, 4) === 500,
-            "Test quarter notes at 120 are converted to milliseconds correctly"
-        );
-
-        console.assert(
-            bpmToMs(120, 8) === 250,
-            "Test eigth notes at 120 are converted to milliseconds correctly"
-        );
-
-        console.assert(
-            bpmToMs(120, 16) === 125,
-            "Test sixteenth notes at 120 are converted to milliseconds correctly"
-        );
-
-        console.assert(
-            bpmToMs(120, 32) === 62.5,
-            "Test thirty-second notes at 120 are converted to milliseconds correctly"
-        );
-    }
-    
-    // Uncomment the line below to check the tests
-    // test();
-})();
+}

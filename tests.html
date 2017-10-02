@@ -1,0 +1,46 @@
+<script src="metronome.js"></script>
+<script src="tinytest.js"></script>
+<script>
+    tests({
+
+        "Test we detect the correct place to beep in a bar": () => {
+            assertEquals(shouldBeep(4, 5), false);
+        },
+
+        "Test we detect the correct place to beep in a bar": () => {
+            assertEquals(shouldBeep(4, 4), true);
+        },
+
+        "Test we assign the correct text to the button": () => {
+            assertEquals(updateToggleButtonText(true), 'pause');
+        },
+
+        "Test we assign the correct text to the button": () => {
+            assertEquals(updateToggleButtonText(false), 'play');
+        },
+
+        "Test whole notes at 120 are converted to milliseconds correctly": () => {
+            assertEquals(bpmToMs(120, 1), 2000);
+        },
+
+        "Test half notes at 120 are converted to milliseconds correctly": () => {
+            assertEquals(bpmToMs(120, 2), 1000);
+        },
+
+        "Test quarter notes at 120 are converted to milliseconds correctly": () => {
+            assertEquals(bpmToMs(120, 4), 500);
+        },
+
+        "Test eigth notes at 120 are converted to milliseconds correctly": () => {
+            assertEquals(bpmToMs(120, 8), 250);
+        },
+
+        "Test sixteenth notes at 120 are converted to milliseconds correctly": () => {
+            assertEquals(bpmToMs(120, 16), 125);
+        },
+
+        "Test thirty-second notes at 120 are converted to milliseconds correctly": () => {
+            assertEquals(bpmToMs(120, 32), 62.5)
+        }
+    });
+</script>
