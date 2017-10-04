@@ -54,7 +54,9 @@ elements.closeOptions.addEventListener('click', (e) => {
     elements.options.classList.toggle('hidden');
 });
 
-var updateTempoValue = () => elements.tempoValue.innerText = `at ${elements.tempo.value} bpm`;
+function updateTempoValue() {
+    elements.tempoValue.innerText = `at ${elements.tempo.value} bpm`;
+}
 
 function togglePlay() {
     settings.playSound = !settings.playSound;
