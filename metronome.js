@@ -25,7 +25,8 @@ const elements = {
     closeOptions: document.getElementById("close-options"),
     options: document.getElementById("options"),
     volume: document.getElementById("volume"),
-    waveform: document.getElementById("waveform")
+    waveform: document.getElementById("waveform"),
+    tapButton: document.getElementById("tap-button")
 };
 
 /**
@@ -53,6 +54,8 @@ elements.tempo.addEventListener('change', update);
 elements.closeOptions.addEventListener('click', (e) => {
     elements.options.classList.toggle('hidden');
 });
+
+elements.tapButton.addEventListener('click', updateTapTempo);
 
 function updateTempoValue() {
     elements.tempoValue.innerText = `at ${elements.tempo.value} bpm`;
@@ -97,6 +100,20 @@ function update(shouldPlaySound) {
 
     settings.timesThrough = -1;
 }
+
+var lastTap;
+function updateTapTempo() {
+	var tap = new Date();
+	lastTap = lastTap || tap;
+    var diffInMillis = Math.abs((lastTap - tap) / 1000);
+	lastTap = tap;
+    var bpm = 60 / diffInMillis;
+    elements.tempo.value = bpm;
+    tick();
+    update();    
+    updateTempoValue();
+}
+
 
 function updateBeepInterval(tempo, beatType) {
 
