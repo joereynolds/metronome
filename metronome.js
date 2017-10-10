@@ -147,6 +147,7 @@ function tick() {
     }
 
     oscillator.start();
+    oscillator.stop(context.currentTime + 0.1);
 
     if (gain.gain.value > 0) {
         gain.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + .10)
