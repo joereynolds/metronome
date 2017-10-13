@@ -70,13 +70,13 @@ function updateBeatCounter() {
 
 /**
  * Updates the text of the button.
- * @param {Boolean} shouldPlaySound 
+ * @param {Boolean} shouldPlaySound
  */
 function updateToggleButtonText(shouldPlaySound) {
-    let buttonText = "play";
+    let buttonText = "start";
 
     if (shouldPlaySound) {
-        buttonText = "pause";
+        buttonText = "stop";
     }
 
     return buttonText;
