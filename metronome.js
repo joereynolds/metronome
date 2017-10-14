@@ -73,13 +73,13 @@ function updateBeatCounter() {
 
 /**
  * Updates the text of the button.
- * @param {Boolean} shouldPlaySound 
+ * @param {Boolean} shouldPlaySound
  */
 function updateToggleButtonText(shouldPlaySound) {
-    let buttonText = "play";
+    let buttonText = "start";
 
     if (shouldPlaySound) {
-        buttonText = "pause";
+        buttonText = "stop";
     }
 
     return buttonText;
@@ -164,6 +164,7 @@ function tick() {
     }
 
     oscillator.start();
+    oscillator.stop(context.currentTime + 0.1);
 
     if (gain.gain.value > 0) {
         gain.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + .10)
