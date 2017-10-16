@@ -100,6 +100,14 @@ button:hover {
   padding: 15px;
 }
 
+.counter.replay {
+  background: linear-gradient(#222, #888);
+  padding: 16px;
+  font-size: 14px;
+  border: 1px solid #456;
+  border-radius: 8px;
+}
+
 .hidden {
   display: none;
 }
