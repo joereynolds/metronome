@@ -69,6 +69,12 @@ function togglePlay() {
 function updateBeatCounter() {
     const val = elements.noteType.value;
     elements.beatCounter.innerText = `${(settings.timesThrough % val) + 1}`;
+    if(settings.timesThrough % val == 0) {
+        elements.beatCounter.classList.add('replay');
+        setTimeout(function() {
+            elements.beatCounter.classList.remove('replay');
+        }, 100);
+    }
 }
 
 /**
